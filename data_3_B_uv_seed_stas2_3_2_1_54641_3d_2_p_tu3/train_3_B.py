@@ -534,7 +534,7 @@ def train_and_evaluate_from_npy(
         if avg_val < best_val:
             best_val = avg_val
             no_imp = 0
-            torch.save(model.state_dict(), 'best_direct_model.pth')
+            torch.save(model.state_dict(), f'{out_dir}best_direct_model.pth')
         else:
             no_imp += 1
         if no_imp >= patience:
