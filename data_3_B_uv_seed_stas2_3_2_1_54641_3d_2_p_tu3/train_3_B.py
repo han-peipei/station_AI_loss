@@ -22,7 +22,7 @@ from data_3_B import standardize
 import random
 torch.backends.cuda.matmul.allow_tf32 = False
 torch.backends.cudnn.allow_tf32 = False
-out_dir = "/kaggle/working/station_AI_loss3/"
+out_dir = "/kaggle/working/station_AI_loss4/"
 os.makedirs(out_dir, exist_ok=True)
 ##########################################################################################
 def stitch_overlapping_forecasts(y_windows):
@@ -518,8 +518,8 @@ def train_and_evaluate_from_npy(
             # 分段权重（你可以自己调）
             w = torch.ones_like(y_true_phys)
             w = torch.where(y_true_phys >= 6.0,  torch.full_like(w, 1.5), w)
-            w = torch.where(y_true_phys >= 10.8, torch.full_like(w, 10.0), w)
-            w = torch.where(y_true_phys >= 14.0, torch.full_like(w, 12.0), w)
+            w = torch.where(y_true_phys >= 10.8, torch.full_like(w, 11.0), w)
+            w = torch.where(y_true_phys >= 14.0, torch.full_like(w, 14.0), w)
             # w = torch.where(y_true_phys >= 10.8, torch.full_like(w, 4.0), w)
             # w = torch.where(y_true_phys >= 14.0, torch.full_like(w, 8.0), w)
             # 分段加权 L1
@@ -548,8 +548,8 @@ def train_and_evaluate_from_npy(
                 # 分段权重（你可以自己调）
                 w = torch.ones_like(y_true_phys)
                 w = torch.where(y_true_phys >= 6.0,  torch.full_like(w, 1.5), w)
-                w = torch.where(y_true_phys >= 10.8, torch.full_like(w, 10.0), w)
-                w = torch.where(y_true_phys >= 14.0, torch.full_like(w, 12.0), w)
+                w = torch.where(y_true_phys >= 10.8, torch.full_like(w, 11.0), w)
+                w = torch.where(y_true_phys >= 14.0, torch.full_like(w, 14.0), w)
                 # w = torch.where(y_true_phys >= 10.8, torch.full_like(w, 4.0), w)
                 # w = torch.where(y_true_phys >= 14.0, torch.full_like(w, 8.0), w)
                 # 分段加权 L1
