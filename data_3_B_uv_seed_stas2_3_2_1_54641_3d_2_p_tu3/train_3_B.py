@@ -607,9 +607,9 @@ def train_and_evaluate_from_npy(
     # 1) 连续时间序列（拼接）
     # plot_timeseries_stitched(trues, preds, time=time_val, unit='m/s', tag='val')
     # plot_kde2d_full(trues, preds, unit='m/s', tag='val',
-                nx=200, ny=200, 
-                show_contour=True,
-                bw_method=None)  
+                # nx=200, ny=200, 
+                # show_contour=True,
+                # bw_method=None)  
     plot_scatter_by_leads(trues, preds,  unit='m/s', tag='val')
     # plot_chain_rows_by_step(trues, preds, tag='val', auto_time=True)
     # plot_residual_hist_all(trues, preds,bins=40, unit='m/s', tag='val')
