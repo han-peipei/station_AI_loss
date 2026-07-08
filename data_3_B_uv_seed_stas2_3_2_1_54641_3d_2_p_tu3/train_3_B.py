@@ -520,20 +520,23 @@ def train_and_evaluate_from_npy(
             # print("out.shape =", out.shape)
             y_true_phys = y_b * y_std_t + y_mean_t   # [B, F]，单位 m/s
             y_pred_phys = out * y_std_t + y_mean_t
-            # 分段权重（你可以自己调）
+            # 分段权重
+            ###########################################################################
             w = torch.ones_like(y_true_phys)
-            # w = torch.where(y_true_phys >= 6.0,  torch.full_like(w, 1.5), w)
-            # w = torch.where(y_true_phys >= 10.8, torch.full_like(w, 15.0), w)
-            # w = torch.where(y_true_phys >= 14.0, torch.full_like(w, 21.0), w)
+            w = torch.where(y_true_phys >= 6.0,  torch.full_like(w, 1.5), w)
+            w = torch.where(y_true_phys >= 10.8, torch.full_like(w, 15.0), w)
+            w = torch.where(y_true_phys >= 14.0, torch.full_like(w, 21.0), w)
             # # w = torch.where(y_true_phys >= 10.8, torch.full_like(w, 4.0), w)
             # # w = torch.where(y_true_phys >= 14.0, torch.full_like(w, 8.0), w)
-            bins = torch.tensor(
-            [1.6, 3.4, 5.5, 8.0, 10.8, 13.9, 17.2, 20.8, 24.5],
-            device=y_true_phys.device,dtype=y_true_phys.dtype)
-            weights = torch.tensor(
-             [1.0, 1.0, 1.0, 1.0, 2, 3.4, 5.2, 6.5, 7.8, 9.0],device=y_true_phys.device,dtype=y_true_phys.dtype)
-            idx = torch.bucketize(y_true_phys, bins)
-            w = weights[idx]
+            ##################################################################################
+            # bins = torch.tensor(
+            # [1.6, 3.4, 5.5, 8.0, 10.8, 13.9, 17.2, 20.8, 24.5],
+            # device=y_true_phys.device,dtype=y_true_phys.dtype)
+            # weights = torch.tensor(
+             # [1.0, 1.0, 1.0, 1.0, 2, 3.4, 5.2, 6.5, 7.8, 9.0],device=y_true_phys.device,dtype=y_true_phys.dtype)
+            # idx = torch.bucketize(y_true_phys, bins)
+            # w = weights[idx]
+            ####################################################################################
             # 分段加权 L1
             # err = torch.abs(out - y_b)              
             # loss = (w * err).sum() / (w.sum() + 1e-8)
